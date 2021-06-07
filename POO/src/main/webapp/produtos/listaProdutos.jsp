@@ -9,12 +9,50 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-wEmeIV1mKuiNpC+IOBjI7aAzPcEZeedi5yW5f2yOq55WWLwNGmvvx4Um1vskeMj0" crossorigin="anonymous">                
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>Produtos</title>
+
+        <script type="text/javascript">
+            
+            function mostrarTelaConfirmacao(endereco){
+                
+                $("#enderecoProduto").html(endereco);
+                
+                var modalConfirmacao = $("#confirmarInativacao");
+                modalConfirmacao.show();
+            }
+            
+            function fecharTelaConfirmacao(){
+                $("#confirmarInativacao").hide();
+            }
+            
+            function inativarProduto(){
+                var endereco = $("#enderecoProduto").html();
+                fecharTelaConfirmacao();
+                $.ajax("InativarProdutoServlet?endereco=" + endereco).done(function(){
+                        location.reload();
+                        
+                    })
+                    .fail(function(){
+                        $("#erro").css("display", "block");
+                        setTimeout(function(){
+                            $("#erro").css("display", "none");                        
+                        }, 3000);
+                    });
+            }
+            
+        </script>    
+
     </head>
-    <body>
-            </b></b>
+    <body class="container" background="Guardian.png" bgproperties="fixed">
+        <h1>Lista Produtos</h1>        
+
+        <div class="alert alert-danger" role="alert" id="erro" style="display:none">
+                Erro ao Inativar Produto!           
+        </div>
+        
+        </b></b>
 
         <table class="table">
             
@@ -30,12 +68,35 @@
                     <td>${produto.endereco}</td>
                     <td>${produto.quantidade}</td>
                     
-                    <td><a href=""><button type="button" class="btn btn-primary">Alterar</button></a></td>
+                    <td><a href="AlterarProdutoServlet?endereco=${produto.endereco}"><button type="button" class="btn btn-primary">Alterar</button></a></td>
                 
-                    <td><button type="button" class="btn btn-primary" onclick="">Inativar</button></td>
+                    <td><a href="InativarProdutoServlet?endereco=${produto.endereco}"><button type="button" class="btn btn-primary">Inativar</button></td>
                 </tr>
             </c:forEach>
         </table>
+
+
+
+        <div class="modal" id="confirmarInativacao">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">Confirmar Inativação</h5>
+                </div>
+              <div class="modal-body">
+                  <p>Tem certeza que deseja deletar o produto contido no endereço <label id="enderecoProduto"></label>?</p>
+              </div>
+              <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" onclick="fecharTelaConfirmacao()">Cancelar</button>
+                  <button type="button" class="btn btn-primary" onclick="">Confirmar</button>
+              </div>
+            </div>
+          </div>
+        </div>
         
+                     
+        <br/><br/>
+   
+
     </body>
 </html>
