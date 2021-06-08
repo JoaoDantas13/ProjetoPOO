@@ -58,6 +58,7 @@
             
             <th>Nome</th>
             <th>Endereco</th>
+            <th>Métrica</th>
             <th>Quantidade</th>
             <th></th>
             <th></th>
@@ -66,11 +67,25 @@
                 <tr>                    
                     <td>${produto.nome}</td>                    
                     <td>${produto.endereco}</td>
-                    <td>${produto.quantidade}</td>
+                    <td>${produto.metrica}</td>
                     
-                    <td><a href="AlterarProdutoServlet?endereco=${produto.endereco}"><button type="button" class="btn btn-primary">Alterar</button></a></td>
+                    <c:set var = "metricax" value = "${produto.metrica}"/>
+                    
+                    <c:if test="${metricax == 'unidade'}">
+                        <td>${produto.unidades}</td>
+                    </c:if>
+                    
+                    <c:if test="${metricax == 'm2'}">
+                        <td>${produto.m2}</td>
+                    </c:if> 
+                    
+                    <c:if test="${metricax == 'm3'}">
+                        <td>${produto.m3}</td>
+                    </c:if>
+                    
+                    <td><a href="AlterarProdutoServlet?endereco=${produto.endereco}"><button type="button" class="btn btn-primary">Baixa Parcial</button></a></td>
                 
-                    <td><a href="InativarProdutoServlet?endereco=${produto.endereco}"><button type="button" class="btn btn-primary">Inativar</button></td>
+                    <td><a href="InativarProdutoServlet?endereco=${produto.endereco}"><button type="button" class="btn btn-primary">Liberar Endereço</button></td>
                 </tr>
             </c:forEach>
         </table>

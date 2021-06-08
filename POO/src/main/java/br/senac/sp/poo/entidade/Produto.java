@@ -19,17 +19,17 @@ import lombok.Setter;
 public class Produto {
     private String nome;
     private String endereco;
-    private int quantidade;
+    private String metrica;
     
-    public Produto(String nome, String endereco, int quantidade){
+    public Produto(String nome, String endereco, String metrica){
         this.nome = nome;
         this.endereco = endereco;
-        this.quantidade = quantidade;
+        this.metrica = metrica;
     }
     
     @Override
     public String toString(){
-        return String.format("<br/> Nome: %s <br/> Endereco: %s <br/> Quantidade: %d <br/>", 
-                nome,endereco,quantidade);
+        return String.format("<br/> Nome: %s <br/> Endereco: %s <br/> Métrica: %s <br/>", 
+                nome,endereco,metrica);
         }
 }

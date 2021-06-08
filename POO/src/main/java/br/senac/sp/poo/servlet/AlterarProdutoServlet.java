@@ -6,7 +6,10 @@
 package br.senac.sp.poo.servlet;
 
 import br.senac.sp.poo.dao.ProdutoDAO;
+import br.senac.sp.poo.entidade.Ferramenta;
+import br.senac.sp.poo.entidade.Granel;
 import br.senac.sp.poo.entidade.Produto;
+import br.senac.sp.poo.entidade.Revestimento;
 import br.senac.sp.poo.utils.Redirect;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -38,10 +41,23 @@ public class AlterarProdutoServlet extends HttpServlet {
             throws ServletException, IOException {
         String nome = request.getParameter("nome");
         String endereco = request.getParameter("endereco");
-        int quantidade = Integer.parseInt(request.getParameter("quantidade"));
+        String metrica = request.getParameter("metrica");
         
-        Produto produto = new Produto(nome, endereco, quantidade);
-        boolean ok = ProdutoDAO.atualizar(produto);
-        Redirect.sendRedirect(ok, response);        
+        if("unidade".equals(metrica)){
+            int quantidade = Integer.parseInt(request.getParameter("quantidade"));        
+            Ferramenta produto = new Ferramenta(nome, endereco, metrica, quantidade);
+            boolean ok = ProdutoDAO.atualizar(produto);
+            Redirect.sendRedirect(ok, response);        
+        } else if ("m2".equals(metrica)){
+            double quantidade = Integer.parseInt(request.getParameter("quantidade"));        
+            Revestimento produto = new Revestimento(nome, endereco, metrica, quantidade);
+            boolean ok = ProdutoDAO.atualizar(produto);
+            Redirect.sendRedirect(ok, response);        
+        } else{
+            double quantidade = Integer.parseInt(request.getParameter("quantidade"));        
+            Granel produto = new Granel(nome, endereco, metrica, quantidade);
+            boolean ok = ProdutoDAO.atualizar(produto);
+            Redirect.sendRedirect(ok, response);        
+        }   
     }
 }

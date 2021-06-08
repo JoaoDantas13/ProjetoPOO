@@ -6,7 +6,10 @@
 package br.senac.sp.poo.dao;
 
 import br.senac.sp.poo.conexao.Conexao;
+import br.senac.sp.poo.entidade.Ferramenta;
+import br.senac.sp.poo.entidade.Granel;
 import br.senac.sp.poo.entidade.Produto;
+import br.senac.sp.poo.entidade.Revestimento;
 import br.senac.sp.poo.interfaces.Acoes;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -34,10 +37,22 @@ public class ProdutoDAO implements Acoes{
             while(rs.next()) {
                 String nome = rs.getString("nome");
                 String endereco = rs.getString("endereco");
-                int quantidade = rs.getInt("quantidade");
+                String metrica = rs.getString("metrica");
+                                
+                if("unidade".equals(metrica)){
+                    int unidades = rs.getInt("quantidade");
+                    Ferramenta produto = new Ferramenta(nome, endereco, metrica, unidades);
+                    produtos.add(produto);
+                } else if ("m2".equals(metrica)){
+                    double quantidade = rs.getDouble("quantidade");
+                    Revestimento produto = new Revestimento(nome, endereco, metrica, quantidade);
+                    produtos.add(produto);
+                } else {
+                    double quantidade = rs.getDouble("quantidade");
+                    Granel produto = new Granel(nome, endereco, metrica, quantidade);
+                    produtos.add(produto);
+                }
                 
-                Produto produto = new Produto(nome, endereco, quantidade);
-                produtos.add(produto);
             }
         } catch (SQLException ex) {
             Logger.getLogger(ProdutoDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -55,9 +70,19 @@ public class ProdutoDAO implements Acoes{
             ps.setString(1, endereco);
             ResultSet rs = ps.executeQuery();
             if(rs.next()){
-                String nome = rs.getString("nome");
-                int quantidade = rs.getInt("quantidade");
-                produto = new Produto(nome, endereco, quantidade);
+                String nome = rs.getString("nome");                
+                String metrica = rs.getString("metrica");
+                
+                if("unidade".equals(metrica)){
+                    int quantidade = rs.getInt("quantidade");
+                    produto = new Ferramenta(nome, endereco, metrica, quantidade);
+                } else if ("m2".equals(metrica)){
+                    double quantidade = rs.getDouble("quantidade");
+                    produto = new Revestimento(nome, endereco, metrica, quantidade);
+                } else {
+                    double quantidade = rs.getDouble("quantidade");
+                    produto = new Granel(nome, endereco, metrica, quantidade);
+                }
             }
         } catch (SQLException ex) {
             Logger.getLogger(ProdutoDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -65,17 +90,18 @@ public class ProdutoDAO implements Acoes{
         return produto;
     }     
     
-    public static boolean atualizar(Produto produto){
+    public static boolean atualizar(Ferramenta produto){
         boolean ok = true;
-        String query = "update produto set nome=?, quantidade=?"
+        String query = "update produto set nome=?, metrica=?, quantidade=?"
                 + " where endereco=?";
         Connection con;
         try {
             con = Conexao.getConexao();
             PreparedStatement ps = con.prepareStatement(query);
             ps.setString(1, produto.getNome());
-            ps.setInt(2, produto.getQuantidade());
-            ps.setString(3, produto.getEndereco());            
+            ps.setString(2, produto.getMetrica());            
+            ps.setInt(3, produto.getUnidades());
+            ps.setString(4, produto.getEndereco());            
             ps.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(ProdutoDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -83,11 +109,47 @@ public class ProdutoDAO implements Acoes{
         }
         return ok;
     }
+    
+    public static boolean atualizar(Revestimento produto){
+        boolean ok = true;
+        String query = "update produto set nome=?, metrica=?, quantidade=?"
+                + " where endereco=?";
+        Connection con;
+        try {
+            con = Conexao.getConexao();
+            PreparedStatement ps = con.prepareStatement(query);
+            ps.setString(1, produto.getNome());
+            ps.setString(2, produto.getMetrica());            
+            ps.setDouble(3, produto.getM2());
+            ps.setString(4, produto.getEndereco());            
+            ps.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(ProdutoDAO.class.getName()).log(Level.SEVERE, null, ex);
+            ok = false;
+        }
+        return ok;
+    }    
+    
+    public static boolean atualizar(Granel produto){
+        boolean ok = true;
+        String query = "update produto set nome=?, metrica=?, quantidade=?"
+                + " where endereco=?";
+        Connection con;
+        try {
+            con = Conexao.getConexao();
+            PreparedStatement ps = con.prepareStatement(query);
+            ps.setString(1, produto.getNome());
+            ps.setString(2, produto.getMetrica());            
+            ps.setDouble(3, produto.getM3());
+            ps.setString(4, produto.getEndereco());            
+            ps.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(ProdutoDAO.class.getName()).log(Level.SEVERE, null, ex);
+            ok = false;
+        }
+        return ok;
+    }        
 
-    @Override
-    public boolean inativo(String endereco){
-        return true;
-    }
     
     public static boolean inativar(String endereco){
         boolean ok = true;
@@ -103,4 +165,27 @@ public class ProdutoDAO implements Acoes{
             ok = false;
         }
         return ok;    }        
+
+    @Override
+    public boolean inativo(String endereco){
+        return true;
+    }
+    
+    public static boolean cadastrar(Ferramenta ferramenta){
+        boolean ok = true;
+        String query = "insert into ferramenta (nome, endereco, unidades) values (?,?,?)";
+        Connection con;
+        try {
+            con = Conexao.getConexao();
+            PreparedStatement ps = con.prepareStatement(query);
+            ps.setString(1, ferramenta.getNome());
+            ps.setString(2, ferramenta.getEndereco());
+            ps.setInt(3, ferramenta.getUnidades());
+            ps.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(ProdutoDAO.class.getName()).log(Level.SEVERE, null, ex);
+            ok = false;
+        }
+        return ok;        
+    }     
 }
