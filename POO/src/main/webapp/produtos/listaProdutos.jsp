@@ -54,6 +54,11 @@
         
         </b></b>
 
+        <div class ="btnincluir">
+            <a href="produtos/incluirProduto.jsp"><button type="button" class="btn btn-primary">Incluir novo Produto</button></a>
+        </div>
+
+
         <table class="table">
             
             <th>Nome</th>

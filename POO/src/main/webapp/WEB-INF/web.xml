@@ -12,6 +12,10 @@
         <servlet-name>InativarProdutoServlet</servlet-name>
         <servlet-class>br.senac.sp.poo.servlet.InativarProdutoServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>CadastrarProdutoServlet</servlet-name>
+        <servlet-class>br.senac.sp.poo.servlet.CadastrarProdutoServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ProdutoServlet</servlet-name>
         <url-pattern>/ProdutoServlet</url-pattern>
@@ -23,6 +27,10 @@
     <servlet-mapping>
         <servlet-name>InativarProdutoServlet</servlet-name>
         <url-pattern>/InativarProdutoServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CadastrarProdutoServlet</servlet-name>
+        <url-pattern>/CadastrarProdutoServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

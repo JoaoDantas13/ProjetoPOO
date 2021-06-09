@@ -173,14 +173,15 @@ public class ProdutoDAO implements Acoes{
     
     public static boolean cadastrar(Ferramenta ferramenta){
         boolean ok = true;
-        String query = "insert into ferramenta (nome, endereco, unidades) values (?,?,?)";
+        String query = "insert into produto (nome, endereco, metrica, quantidade) values (?,?,?,?)";
         Connection con;
         try {
             con = Conexao.getConexao();
             PreparedStatement ps = con.prepareStatement(query);
             ps.setString(1, ferramenta.getNome());
             ps.setString(2, ferramenta.getEndereco());
-            ps.setInt(3, ferramenta.getUnidades());
+            ps.setString(3, ferramenta.getMetrica());
+            ps.setDouble(4, ferramenta.getUnidades());
             ps.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(ProdutoDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -188,4 +189,42 @@ public class ProdutoDAO implements Acoes{
         }
         return ok;        
     }     
+    
+    public static boolean cadastrar(Revestimento revestimento){
+        boolean ok = true;
+        String query = "insert into produto (nome, endereco, metrica, quantidade) values (?,?,?,?)";
+        Connection con;
+        try {
+            con = Conexao.getConexao();
+            PreparedStatement ps = con.prepareStatement(query);
+            ps.setString(1, revestimento.getNome());
+            ps.setString(2, revestimento.getEndereco());
+            ps.setString(3, revestimento.getMetrica());
+            ps.setDouble(4, revestimento.getM2());
+            ps.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(ProdutoDAO.class.getName()).log(Level.SEVERE, null, ex);
+            ok = false;
+        }
+        return ok;        
+    }
+    
+    public static boolean cadastrar(Granel granel){
+        boolean ok = true;
+        String query = "insert into produto (nome, endereco, metrica, quantidade) values (?,?,?,?)";
+        Connection con;
+        try {
+            con = Conexao.getConexao();
+            PreparedStatement ps = con.prepareStatement(query);
+            ps.setString(1, granel.getNome());
+            ps.setString(2, granel.getEndereco());
+            ps.setString(3, granel.getMetrica());
+            ps.setDouble(4, granel.getM3());
+            ps.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(ProdutoDAO.class.getName()).log(Level.SEVERE, null, ex);
+            ok = false;
+        }
+        return ok;        
+    }    
 }
