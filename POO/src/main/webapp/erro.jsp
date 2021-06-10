@@ -14,6 +14,6 @@
     <body>
         <h1>Erro</h1>
         <br/>         
-        <a href="../POO/ProdutoServlet">Voltar</a>
+        <a href="../POO">Voltar</a>
     </body>
 </html>
