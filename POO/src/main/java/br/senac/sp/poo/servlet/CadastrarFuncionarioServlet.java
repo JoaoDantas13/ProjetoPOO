@@ -10,6 +10,10 @@ import br.senac.sp.poo.dao.ProdutoDAO;
 import br.senac.sp.poo.entidade.Funcionario;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.lang.reflect.InvocationTargetException;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -26,23 +30,35 @@ public class CadastrarFuncionarioServlet extends HttpServlet {
             throws ServletException, IOException {
         
         
-        String nome = request.getParameter("nome");
-        String setor = request.getParameter("setor");
-        boolean ok;
-        
+        try {
+            String nome = request.getParameter("nome");
+            String setor = request.getParameter("setor");
+            boolean ok;
+            
             Funcionario funcionario = new Funcionario(-1, nome, setor);
-            ok = FuncionarioDAO.cadastrar(funcionario);        
-          
-        if(ok){
+            ok = FuncionarioDAO.cadastrar(funcionario);
             
-            response.sendRedirect(request.getContextPath() + "/sucesso.jsp");
-            
-        } else {
-            
-            String msg = "O cadastro não foi realizado!!";
-            request.setAttribute("msgErro", msg);
-            request.getRequestDispatcher("/erro.jsp").forward(request, response);
-            
+            if(ok){
+                
+                response.sendRedirect(request.getContextPath() + "/sucesso.jsp");
+                
+            } else {
+                
+                String msg = "O cadastro não foi realizado!!";
+                request.setAttribute("msgErro", msg);
+                request.getRequestDispatcher("/erro.jsp").forward(request, response);
+                
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(CadastrarFuncionarioServlet.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(CadastrarFuncionarioServlet.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalArgumentException ex) {
+            Logger.getLogger(CadastrarFuncionarioServlet.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (InvocationTargetException ex) {
+            Logger.getLogger(CadastrarFuncionarioServlet.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (NoSuchMethodException ex) {
+            Logger.getLogger(CadastrarFuncionarioServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
     }  
 }

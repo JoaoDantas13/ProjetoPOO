@@ -5,6 +5,7 @@
  */
 package br.senac.sp.poo.entidade;
 
+import java.lang.reflect.Method;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -20,6 +21,20 @@ public class Revestimento extends Produto{
     public Revestimento (String nome, String endereco, String metrica, double m2){
         super(nome, endereco, metrica);
         this.m2 = m2;
+    }
+    
+    @Override
+    public String[] getTabela() {
+        String[] tabela = {"produto", "nome", "endereco", "metrica", "quantidade"};
+
+        return tabela;
+    }
+
+    @Override
+    public Method[] getMetodos() throws NoSuchMethodException {
+        Method[] metodos = {Produto.class.getMethod("getNome"), Produto.class.getMethod("getEndereco"), Produto.class.getMethod("getMetrica"), Revestimento.class.getMethod("getM2")};
+
+        return metodos;
     }
     
     @Override

@@ -16,7 +16,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class Produto {
+public abstract class Produto extends Entidade {
     private String nome;
     private String endereco;
     private String metrica;

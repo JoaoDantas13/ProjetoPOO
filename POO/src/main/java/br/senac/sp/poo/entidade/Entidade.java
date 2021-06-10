@@ -3,12 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.senac.sp.poo.interfaces;
+package br.senac.sp.poo.entidade;
+
+import br.senac.sp.poo.interfaces.InterfaceEntidades;
 
 /**
  *
- * @author Eduardo Silva
+ * @author saulo.ambezerra
  */
-public interface Acoes {
-    public abstract boolean inativo(String variante);
+public abstract class Entidade implements InterfaceEntidades {
+    
 }

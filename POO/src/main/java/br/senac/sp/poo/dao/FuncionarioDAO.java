@@ -20,7 +20,7 @@ import java.util.logging.Logger;
  *
  * @author HOME
  */
-public class FuncionarioDAO {
+public class FuncionarioDAO extends CadastroDAO {
 
    public static List<Funcionario> getFuncionarios() {
         List<Funcionario> funcionarios = new ArrayList<>();
@@ -66,23 +66,6 @@ public class FuncionarioDAO {
         }
         return funcionario;
     }     
-   
-    public static boolean cadastrar(Funcionario funcionario){
-        boolean ok = true;
-        String query = "insert into funcionario (nome, setor) values (?,?)";
-        Connection con;
-        try {
-            con = Conexao.getConexao();
-            PreparedStatement ps = con.prepareStatement(query);
-            ps.setString(1, funcionario.getNome());
-            ps.setString(2, funcionario.getSetor());
-            ps.executeUpdate();
-        } catch (SQLException ex) {
-            Logger.getLogger(FuncionarioDAO.class.getName()).log(Level.SEVERE, null, ex);
-            ok = false;
-        }
-        return ok;        
-    }   
     
     public static boolean atualizar(Funcionario funcionario){
         boolean ok = true;

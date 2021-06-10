@@ -11,6 +11,10 @@ import br.senac.sp.poo.entidade.Granel;
 import br.senac.sp.poo.entidade.Revestimento;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.lang.reflect.InvocationTargetException;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -29,24 +33,60 @@ public class CadastrarProdutoServlet extends HttpServlet {
         String nome = request.getParameter("nome");
         String endereco = request.getParameter("endereco");
         String metrica = request.getParameter("metrica");
-        boolean ok;
+        boolean ok = false;
         
         if("unidades".equals(metrica) ){
-            int quantidade = Integer.parseInt(request.getParameter("quantidade"));
-            Ferramenta ferramenta = new Ferramenta(nome, endereco, metrica, quantidade);
-            ok = ProdutoDAO.cadastrar(ferramenta);        
+            try {
+                int quantidade = Integer.parseInt(request.getParameter("quantidade"));
+                Ferramenta ferramenta = new Ferramenta(nome, endereco, metrica, quantidade);        
+                ok = ProdutoDAO.cadastrar(ferramenta);
+            } catch (SQLException ex) {
+                Logger.getLogger(CadastrarProdutoServlet.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IllegalAccessException ex) {
+                Logger.getLogger(CadastrarProdutoServlet.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IllegalArgumentException ex) {
+                Logger.getLogger(CadastrarProdutoServlet.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (InvocationTargetException ex) {
+                Logger.getLogger(CadastrarProdutoServlet.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (NoSuchMethodException ex) {
+                Logger.getLogger(CadastrarProdutoServlet.class.getName()).log(Level.SEVERE, null, ex);
+            }
         } 
         
         else if( "m2".equals(metrica)){
-            double quantidade = Double.parseDouble(request.getParameter("quantidade"));
-            Revestimento revestimento = new Revestimento(nome, endereco, metrica, quantidade);
-            ok = ProdutoDAO.cadastrar(revestimento);        
+            try {
+                double quantidade = Double.parseDouble(request.getParameter("quantidade"));
+                Revestimento revestimento = new Revestimento(nome, endereco, metrica, quantidade);        
+                ok = ProdutoDAO.cadastrar(revestimento);
+            } catch (SQLException ex) {
+                Logger.getLogger(CadastrarProdutoServlet.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IllegalAccessException ex) {
+                Logger.getLogger(CadastrarProdutoServlet.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IllegalArgumentException ex) {
+                Logger.getLogger(CadastrarProdutoServlet.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (InvocationTargetException ex) {
+                Logger.getLogger(CadastrarProdutoServlet.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (NoSuchMethodException ex) {
+                Logger.getLogger(CadastrarProdutoServlet.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         
         else{
-            double quantidade = Double.parseDouble(request.getParameter("quantidade"));
-            Granel granel = new Granel(nome, endereco, metrica, quantidade);
-            ok = ProdutoDAO.cadastrar(granel);        
+            try {
+                double quantidade = Double.parseDouble(request.getParameter("quantidade"));
+                Granel granel = new Granel(nome, endereco, metrica, quantidade);        
+                ok = ProdutoDAO.cadastrar(granel);
+            } catch (SQLException ex) {
+                Logger.getLogger(CadastrarProdutoServlet.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IllegalAccessException ex) {
+                Logger.getLogger(CadastrarProdutoServlet.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IllegalArgumentException ex) {
+                Logger.getLogger(CadastrarProdutoServlet.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (InvocationTargetException ex) {
+                Logger.getLogger(CadastrarProdutoServlet.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (NoSuchMethodException ex) {
+                Logger.getLogger(CadastrarProdutoServlet.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         
         if(ok){

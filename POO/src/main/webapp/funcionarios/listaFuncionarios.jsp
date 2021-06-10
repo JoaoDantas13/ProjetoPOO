@@ -13,7 +13,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Guardian</title>
     </head>
-    <body class="container" background="../Guardian.png" bgproperties="fixed">
+    <body class="container" background="Guardian.png" bgproperties="fixed">
         <h1>Lista Funcionários</h1>
 
         <div class ="btnincluir">
